@@ -8,7 +8,7 @@ module WoerkClient
           return errors.add(:stop, 'No running shift found.')
         end
 
-        shift = WoerkClient::Models::Shift.new(current_shift)
+        shift = WoerkClient::Models::Shift.new('id' => current_shift['id'])
         shift.params['stopped_at'] = Time.now
         shift.save
 
