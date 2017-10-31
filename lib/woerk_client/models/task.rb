@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module WoerkClient
-  class Project
+  module Models
+    class Task
+    end
   end
 end

@@ -11,7 +11,7 @@ RSpec.describe WoerkClient::Client do
   end
 
   describe '.get' do
-    it 'creates the right object' do
+    it 'gets the right object' do
       allow(described_class).to receive_message_chain(:new, :call)
       described_class.get('/shifts')
       expect(described_class).to have_received(:new)
@@ -27,7 +27,7 @@ RSpec.describe WoerkClient::Client do
   end
 
   describe '.put' do
-    it 'creates the right object' do
+    it 'updates the right object' do
       allow(described_class).to receive_message_chain(:new, :call)
       described_class.put(path: '/shifts/123', payload: { foo: false } )
       expect(described_class).to have_received(:new)
@@ -35,7 +35,7 @@ RSpec.describe WoerkClient::Client do
   end
 
   describe '.delete' do
-    it 'creates the right object' do
+    it 'deletes the right object' do
       allow(described_class).to receive_message_chain(:new, :call)
       described_class.delete('/shifts/123')
       expect(described_class).to have_received(:new)

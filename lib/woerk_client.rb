@@ -2,13 +2,18 @@
 
 require 'thor'
 require 'colorize'
+require 'simple_command'
 
 require 'woerk_client/configuration'
 require 'woerk_client/client'
 require 'woerk_client/version'
-require 'woerk_client/shift'
-require 'woerk_client/task'
-require 'woerk_client/project'
+require 'woerk_client/models/shift'
+require 'woerk_client/models/task'
+require 'woerk_client/models/project'
+
+require 'woerk_client/commands/start_shift'
+require 'woerk_client/commands/stop_shift'
+require 'woerk_client/commands/get_status'
 
 module WoerkClient
   class << self
@@ -22,19 +27,35 @@ module WoerkClient
   class CLI < Thor
     desc 'start', 'Start a new working shift'
     def start
-      puts 'Starting shift...'
-      puts 'Done'.colorize(:green) if WoerkClient::Shift.start
+      command = WoerkClient::Commands::StartShift.call
+
+      if command.success?
+        return puts command.result
+      end
+
+      puts command.errors[:start]
     end
 
     desc 'stop', 'Stop your current working shift'
     def stop
-      puts 'Stopping shift...'
-      puts 'Done'.colorize(:green) if WoerkClient::Shift.stop
+      command = WoerkClient::Commands::StopShift.call
+
+      if command.success?
+        return puts command.result
+      end
+
+      puts command.errors[:stop]
     end
 
     desc 'status', 'Get your current working status'
     def status
-      puts 'Status information'
+      command = WoerkClient::Commands::GetStatus.call
+
+      if command.success?
+        return puts command.result
+      end
+
+      puts command.errors[:status]
     end
   end
 end
