@@ -30,7 +30,7 @@ module WoerkClient
       command = WoerkClient::Commands::StartShift.call
 
       if command.success?
-        return puts command.result
+        return puts command.result.colorize(:green)
       end
 
       puts command.errors[:start]
@@ -41,7 +41,7 @@ module WoerkClient
       command = WoerkClient::Commands::StopShift.call
 
       if command.success?
-        return puts command.result
+        return puts command.result.colorize(:green)
       end
 
       puts command.errors[:stop]

@@ -6,12 +6,18 @@ module WoerkClient
       prepend SimpleCommand
 
       def call
-        shift.save
+        start_shift
       rescue RestClient::ExceptionWithResponse => e
         errors.add(:start, e.message)
       end
 
       private
+
+      def start_shift
+        if shift.save
+          "Shift started"
+        end
+      end
 
       def shift
         WoerkClient::Models::Shift.new(started_at: Time.now)

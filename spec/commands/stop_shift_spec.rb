@@ -36,15 +36,20 @@ RSpec.describe WoerkClient::Commands::StopShift do
   context 'when api call is successful' do
     before do
       allow(WoerkClient::Client)
-        .to receive(:post)
+        .to receive(:put)
+        .and_return(true)
 
       allow(WoerkClient::Client)
         .to receive(:get)
-        .and_return('[{"stopped_at": 0}]')
+        .and_return('[{"id": 12, "stopped_at": 0}]')
     end
 
     it 'is successful' do
       expect(command.success?).to eq(true)
+    end
+
+    it 'returns a status message' do
+      expect(command.result).to eq('Shift stopped')
     end
   end
 end

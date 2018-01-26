@@ -10,7 +10,10 @@ module WoerkClient
 
         shift = WoerkClient::Models::Shift.new('id' => current_shift['id'])
         shift.params['stopped_at'] = Time.now
-        shift.save
+
+        if shift.save
+          return 'Shift stopped'
+        end
 
       rescue RestClient::ExceptionWithResponse => e
         errors.add(:stop, e.message)
